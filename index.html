@@ -210,13 +210,25 @@
 
   /* waitlist */
   .join { border-top: 1px solid var(--line); padding-top: 5rem; padding-bottom: 6rem; }
-  .join h2 {
+  .join h2, .about h2 {
     font-family: "Archivo Black", sans-serif;
     font-size: clamp(2rem, 8vw, 3.2rem);
     line-height: 1;
     text-transform: uppercase;
   }
-  .join h2 span { color: var(--accent); }
+  .join h2 span, .about h2 span { color: var(--accent); }
+
+  /* about */
+  .about { border-top: 1px solid var(--line); padding-top: 5rem; padding-bottom: 5rem; }
+  .about p:not(.kicker) {
+    margin-top: 1.4rem;
+    max-width: 30rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .about b { color: var(--ink); font-weight: 600; }
+  .about a { color: var(--ink); }
   form { margin-top: 2.5rem; max-width: 26rem; }
   .field { border-bottom: 1px solid var(--line); }
   .field + .field { margin-top: .25rem; }
@@ -249,6 +261,7 @@
   button:hover { opacity: .92; }
   button:disabled { opacity: .55; cursor: wait; }
   .note { margin-top: 1rem; font-size: .78rem; color: var(--muted); }
+  .note a { color: var(--ink); }
   .error { display: none; margin-top: .9rem; font-size: .85rem; color: var(--accent); }
   #success { display: none; margin-top: 2.5rem; max-width: 26rem; }
   #success .in {
@@ -299,6 +312,14 @@
   }
   footer a { color: var(--ink); text-decoration: none; }
   footer a:hover { color: var(--accent); }
+  .footer-links { display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; }
+  .legal {
+    flex-basis: 100%;
+    font-size: .72rem;
+    letter-spacing: 0;
+    text-transform: none;
+    line-height: 1.6;
+  }
 
   @media (prefers-reduced-motion: reduce) {
     .zoom-stage { height: auto; padding: 4rem 1.5rem; }
@@ -358,6 +379,16 @@
     </div>
   </section>
 
+  <section class="about" id="about">
+    <div class="inner">
+      <p class="kicker">About</p>
+      <h2>Made in <span>London.</span></h2>
+      <p>Vyb is an iPhone app for working out where’s actually worth going tonight — clubs, late-night food and arcades, with opening hours, last entry and entry prices up front.</p>
+      <p>It’s built by <b>Vyb Social Ltd</b>, an independent company based in London and registered in England &amp; Wales (company no. 17398192). We’re starting with London and opening to the waitlist first.</p>
+      <p>Questions, press or venues: <a href="mailto:hello@vybhq.com">hello@vybhq.com</a></p>
+    </div>
+  </section>
+
   <section class="join" id="join">
     <div class="inner">
       <h2>Get in <span>early.</span></h2>
@@ -379,7 +410,7 @@
         <button type="submit" id="join-btn">Join the waitlist</button>
         <p class="error" id="error-msg"></p>
       </form>
-      <p class="note">Free to join. One email when we launch. No spam.</p>
+      <p class="note">Free to join. One email when we launch. No spam. See our <a href="privacy.html">privacy policy</a>.</p>
 
       <div id="success">
         <p class="in">You’re in — your spot</p>
@@ -394,8 +425,13 @@
   </section>
 
   <footer>
-    <a href="https://instagram.com/join.vyb" target="_blank" rel="noopener">Instagram — @join.vyb</a>
-    <span>© Vyb 2026 · London</span>
+    <nav class="footer-links">
+      <a href="mailto:hello@vybhq.com">hello@vybhq.com</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="https://instagram.com/join.vyb" target="_blank" rel="noopener">Instagram — @join.vyb</a>
+    </nav>
+    <span>© 2026 Vyb Social Ltd · London</span>
+    <p class="legal">Vyb Social Ltd is a private limited company registered in England &amp; Wales, company no. 17398192. Registered office: Flat 35, The Fanshawe, Gale Street, Dagenham RM9 4UT, United Kingdom.</p>
   </footer>
 
 <script>
