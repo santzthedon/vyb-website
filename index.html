@@ -32,6 +32,7 @@
     --accent: #C6FF3E;
     --accent-text: #C6FF3E;
     --on-accent: #0D0B14;
+    --error: #FF6B6B;        /* 7.0:1 on night bg */
     --muted: rgba(255,255,255,.55);
     --line: rgba(255,255,255,.14);
     --phone-shadow: rgba(0,0,0,.6);
@@ -45,6 +46,7 @@
     --accent: #FF5C1F;       /* fills (buttons) — pair with dark text, 5.6:1 */
     --accent-text: #C9410C;  /* orange text on cream — 4.6:1 (AA) */
     --on-accent: #1B1B1B;
+    --error: #B3261E;        /* 6.1:1 on cream */
     --muted: #6E6250;        /* 5.6:1 on cream (AA) */
     --line: rgba(27,27,27,.16);
     --phone-shadow: rgba(27,27,27,.25);
@@ -270,7 +272,16 @@
     outline: none;
   }
   input::placeholder { color: var(--muted); }
-  .field:focus-within { border-color: var(--accent-text); }
+  .field:focus-within { border-color: var(--accent-text); box-shadow: 0 1px 0 var(--accent-text); }
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
   button {
     margin-top: 1.75rem;
     width: 100%;
@@ -286,10 +297,12 @@
     cursor: pointer;
   }
   button:hover { opacity: .92; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
   button:disabled { opacity: .55; cursor: wait; }
   .note { margin-top: 1rem; font-size: .78rem; color: var(--muted); }
   .note a { color: var(--ink); }
-  .error { display: none; margin-top: .9rem; font-size: .85rem; color: var(--accent-text); }
+  .error { margin-top: .9rem; font-size: .85rem; color: var(--error); }
+  .error:empty { margin-top: 0; }
   #success { display: none; margin-top: 2.5rem; max-width: 26rem; }
   #success .in {
     font-size: .72rem;
@@ -385,20 +398,21 @@
 
   <section class="hero">
     <div class="inner">
-      <p class="kicker">London · Coming soon</p>
+      <p class="kicker">iPhone · London · Coming soon</p>
       <h1>Where’s good <span>tonight?</span></h1>
       <p class="sub">Clubs, late-night food and arcades actually worth leaving the house for. Opening hours, entry price and what it’s known for — <b>before you’re already out</b>.</p>
       <div class="signup hero-signup">
         <form class="waitlist-form" novalidate>
           <div class="hero-row">
             <div class="field">
-              <input type="email" name="email" placeholder="Your email" autocomplete="email" aria-label="Email address" required>
+              <label class="sr-only" for="hero-email">Email address</label>
+              <input type="email" id="hero-email" name="email" placeholder="Your email" autocomplete="email" aria-describedby="hero-email-error" required>
             </div>
             <button type="submit">Join the waitlist</button>
           </div>
-          <p class="error"></p>
+          <p class="error" id="hero-email-error" aria-live="polite"></p>
         </form>
-        <p class="note">Free to join. One email when we launch. No spam. See our <a href="privacy.html">privacy policy</a>.</p>
+        <p class="note">Free to join. 18+ only. One email when we launch. No spam. See our <a href="privacy.html">privacy policy</a>.</p>
         <p class="done">You’re on the list — <a href="#success">see your spot and referral link</a>.</p>
       </div>
       <p class="scroll-cue">Scroll ↓</p>
@@ -442,9 +456,11 @@
       <div class="signup">
       <form class="waitlist-form" novalidate>
         <div class="field">
-          <input type="email" id="email" name="email" placeholder="Email" autocomplete="email" required>
+          <label class="sr-only" for="email">Email address</label>
+          <input type="email" id="email" name="email" placeholder="Email" autocomplete="email" aria-describedby="email-error" required>
         </div>
         <div class="field">
+          <label class="sr-only" for="university">University (optional)</label>
           <input type="text" id="university" name="university" placeholder="University (optional)" autocomplete="organization" list="unis">
         </div>
         <datalist id="unis">
@@ -456,9 +472,9 @@
           <option value="Roehampton"><option value="St George's"><option value="Royal Holloway">
         </datalist>
         <button type="submit">Join the waitlist</button>
-        <p class="error"></p>
+        <p class="error" id="email-error" aria-live="polite"></p>
       </form>
-      <p class="note">Free to join. One email when we launch. No spam. See our <a href="privacy.html">privacy policy</a>.</p>
+      <p class="note">Free to join. 18+ only. One email when we launch. No spam. See our <a href="privacy.html">privacy policy</a>.</p>
       <p class="done">You’re on the list — <a href="#success">see your spot and referral link</a>.</p>
 
       <div id="success">
@@ -563,20 +579,23 @@
   // moves under whichever form was used.
   document.querySelectorAll(".waitlist-form").forEach(function (form) {
     var btn = form.querySelector("button[type=submit]");
-    var errorMsg = form.querySelector(".error");
+    var errorMsg = form.querySelector(".error");   // aria-live region: stays rendered, empty when no error
+    var emailInput = form.elements.email;
     var label = btn.textContent;
 
     function showError(msg) {
       errorMsg.textContent = msg;
-      errorMsg.style.display = "block";
     }
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      errorMsg.style.display = "none";
+      errorMsg.textContent = "";
+      emailInput.removeAttribute("aria-invalid");
 
-      var email = form.elements.email.value.trim();
+      var email = emailInput.value.trim();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        emailInput.setAttribute("aria-invalid", "true");
+        emailInput.focus();
         showError("That email doesn’t look right — try again?");
         return;
       }
