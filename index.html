@@ -5,9 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vyb — Where's good tonight?</title>
 <meta name="description" content="Vyb is how London finds where's actually good tonight — clubs, late-night food and arcades, with real prices up front. Join the waitlist.">
+<link rel="canonical" href="https://www.vybhq.com/">
 <meta property="og:title" content="Vyb — Where's good tonight?">
 <meta property="og:description" content="How London finds where's actually good tonight. Join the waitlist.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://www.vybhq.com/">
+<meta property="og:site_name" content="Vyb">
+<meta property="og:locale" content="en_GB">
+<meta property="og:image" content="https://www.vybhq.com/assets/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Vyb — Where's good tonight? The Vyb app's map of Shoreditch venues on an iPhone.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vyb — Where's good tonight?">
+<meta name="twitter:description" content="How London finds where's actually good tonight. Join the waitlist.">
+<meta name="twitter:image" content="https://www.vybhq.com/assets/og-image.jpg">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230D0B14'/><text x='50' y='72' font-size='60' font-family='Arial Black,sans-serif' font-weight='900' fill='%23C6FF3E' text-anchor='middle'>V</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,6 +30,7 @@
     --bg: #0D0B14;
     --ink: #FFFFFF;
     --accent: #C6FF3E;
+    --accent-text: #C6FF3E;
     --on-accent: #0D0B14;
     --muted: rgba(255,255,255,.55);
     --line: rgba(255,255,255,.14);
@@ -28,9 +42,10 @@
   [data-theme="light"] {
     --bg: #FFF6E8;
     --ink: #1B1B1B;
-    --accent: #FF5C1F;
-    --on-accent: #FFFFFF;
-    --muted: #9C8B72;
+    --accent: #FF5C1F;       /* fills (buttons) — pair with dark text, 5.6:1 */
+    --accent-text: #C9410C;  /* orange text on cream — 4.6:1 (AA) */
+    --on-accent: #1B1B1B;
+    --muted: #6E6250;        /* 5.6:1 on cream (AA) */
     --line: rgba(27,27,27,.16);
     --phone-shadow: rgba(27,27,27,.25);
     --phone-rim: rgba(27,27,27,.35);
@@ -94,12 +109,15 @@
   .inner { max-width: 44rem; margin: 0 auto; }
 
   /* hero */
-  .hero { padding-top: 9rem; padding-bottom: 5rem; }
+  .hero { padding-top: 7.5rem; padding-bottom: 4rem; }
+  @media (min-width: 700px) {
+    .hero { padding-top: 9rem; padding-bottom: 5rem; }
+  }
   .kicker {
     font-size: .72rem;
     letter-spacing: .18em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--accent-text);
     margin-bottom: 1.4rem;
   }
   h1 {
@@ -109,7 +127,7 @@
     text-transform: uppercase;
     letter-spacing: -.01em;
   }
-  h1 span { color: var(--accent); }
+  h1 span { color: var(--accent-text); }
   .sub {
     margin-top: 1.6rem;
     max-width: 30rem;
@@ -118,8 +136,17 @@
     color: var(--muted);
   }
   .sub b { color: var(--ink); font-weight: 600; }
+  .hero-signup { margin-top: 2rem; max-width: 30rem; }
+  .hero-signup form { margin-top: 0; max-width: none; }
+  .hero-row { display: flex; flex-direction: column; }
+  .hero-row button { margin-top: 1rem; }
+  @media (min-width: 520px) {
+    .hero-row { flex-direction: row; align-items: stretch; gap: 1rem; }
+    .hero-row .field { flex: 1; }
+    .hero-row button { margin-top: 0; width: auto; padding: 1.05rem 1.4rem; white-space: nowrap; }
+  }
   .scroll-cue {
-    margin-top: 3.5rem;
+    margin-top: 2.5rem;
     font-size: .7rem;
     letter-spacing: .18em;
     text-transform: uppercase;
@@ -190,7 +217,7 @@
     font-size: .72rem;
     letter-spacing: .18em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--accent-text);
     margin-bottom: 1rem;
   }
   .feature h2 {
@@ -216,7 +243,7 @@
     line-height: 1;
     text-transform: uppercase;
   }
-  .join h2 span, .about h2 span { color: var(--accent); }
+  .join h2 span, .about h2 span { color: var(--accent-text); }
 
   /* about */
   .about { border-top: 1px solid var(--line); padding-top: 5rem; padding-bottom: 5rem; }
@@ -243,7 +270,7 @@
     outline: none;
   }
   input::placeholder { color: var(--muted); }
-  .field:focus-within { border-color: var(--accent); }
+  .field:focus-within { border-color: var(--accent-text); }
   button {
     margin-top: 1.75rem;
     width: 100%;
@@ -262,7 +289,7 @@
   button:disabled { opacity: .55; cursor: wait; }
   .note { margin-top: 1rem; font-size: .78rem; color: var(--muted); }
   .note a { color: var(--ink); }
-  .error { display: none; margin-top: .9rem; font-size: .85rem; color: var(--accent); }
+  .error { display: none; margin-top: .9rem; font-size: .85rem; color: var(--accent-text); }
   #success { display: none; margin-top: 2.5rem; max-width: 26rem; }
   #success .in {
     font-size: .72rem;
@@ -274,7 +301,7 @@
     font-family: "Archivo Black", sans-serif;
     font-size: clamp(3rem, 14vw, 5rem);
     line-height: 1;
-    color: var(--accent);
+    color: var(--accent-text);
     margin: .6rem 0 1rem;
   }
   #success .move-up { font-size: .95rem; line-height: 1.6; color: var(--muted); }
@@ -296,6 +323,11 @@
   }
   .share-row .wa { background: var(--accent); color: var(--on-accent); border: 1px solid var(--accent); }
   .share-row .copy { background: none; color: var(--ink); border: 1px solid var(--line); }
+  /* once signed up: hide every form; the other form(s) point to the success card */
+  .signup .done { display: none; margin-top: 1.5rem; font-size: .95rem; line-height: 1.6; color: var(--muted); }
+  .signup .done a { color: var(--ink); }
+  .signup.is-done form, .signup.is-done .note { display: none; }
+  .signup.is-done:not(.is-active) .done { display: block; }
 
   footer {
     border-top: 1px solid var(--line);
@@ -311,7 +343,7 @@
     color: var(--muted);
   }
   footer a { color: var(--ink); text-decoration: none; }
-  footer a:hover { color: var(--accent); }
+  footer a:hover { color: var(--accent-text); }
   .footer-links { display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; }
   .legal {
     flex-basis: 100%;
@@ -344,6 +376,19 @@
       <p class="kicker">London · Coming soon</p>
       <h1>Where’s good <span>tonight?</span></h1>
       <p class="sub">Clubs, late-night food and arcades actually worth leaving the house for. Opening hours, entry price and what it’s known for — <b>before you’re already out</b>.</p>
+      <div class="signup hero-signup">
+        <form class="waitlist-form" novalidate>
+          <div class="hero-row">
+            <div class="field">
+              <input type="email" name="email" placeholder="Your email" autocomplete="email" aria-label="Email address" required>
+            </div>
+            <button type="submit">Join the waitlist</button>
+          </div>
+          <p class="error"></p>
+        </form>
+        <p class="note">Free to join. One email when we launch. No spam. See our <a href="privacy.html">privacy policy</a>.</p>
+        <p class="done">You’re on the list — <a href="#success">see your spot and referral link</a>.</p>
+      </div>
       <p class="scroll-cue">Scroll ↓</p>
     </div>
   </section>
@@ -351,7 +396,7 @@
   <section class="zoom-stage" id="zoom-stage">
     <div class="zoom-sticky">
       <div class="phone" id="zoom-phone">
-        <img src="assets/07-discover-zoom.png" data-dark="assets/07-discover-zoom.png" data-light="assets/08-discover-day.png" alt="Vyb Discover map of Shoreditch with named venue pins" loading="lazy">
+        <img src="assets/07-discover-zoom.webp" data-dark="assets/07-discover-zoom.webp" data-light="assets/08-discover-day.webp" alt="Vyb Discover map of Shoreditch with named venue pins" width="640" height="1391" loading="lazy">
       </div>
       <p class="zoom-caption" id="zoom-caption">The whole city, one map</p>
     </div>
@@ -360,7 +405,7 @@
   <section class="features">
     <div class="inner">
       <div class="feature">
-        <div class="feature-media"><div class="phone"><img src="assets/04-detail.png" data-dark="assets/04-detail.png" data-light="assets/09-detail-day.png" alt="Cargo venue detail with hours, last entry and cover charge" loading="lazy"></div></div>
+        <div class="feature-media"><div class="phone"><img src="assets/04-detail.webp" data-dark="assets/04-detail.webp" data-light="assets/09-detail-day.webp" alt="Cargo venue detail with hours, last entry and cover charge" width="640" height="1391" loading="lazy"></div></div>
         <div class="feature-copy">
           <p class="f-num">01 — No guesswork</p>
           <h2>Know before you go</h2>
@@ -368,7 +413,7 @@
         </div>
       </div>
       <div class="feature flip">
-        <div class="feature-media"><div class="phone"><img src="assets/10-levelup-night.png" data-dark="assets/10-levelup-night.png" data-light="assets/11-levelup-day.png" alt="Vyb level-up screen — Level 4, Insider" loading="lazy"></div></div>
+        <div class="feature-media"><div class="phone"><img src="assets/10-levelup-night.webp" data-dark="assets/10-levelup-night.webp" data-light="assets/11-levelup-day.webp" alt="Vyb level-up screen — Level 4, Insider" width="640" height="1391" loading="lazy"></div></div>
         <div class="feature-copy">
           <p class="f-num">02 — Make it a game</p>
           <h2>Earn XP for going out</h2>
@@ -379,20 +424,11 @@
     </div>
   </section>
 
-  <section class="about" id="about">
-    <div class="inner">
-      <p class="kicker">About</p>
-      <h2>Made in <span>London.</span></h2>
-      <p>Vyb is an iPhone app for working out where’s actually worth going tonight — clubs, late-night food and arcades, with opening hours, last entry and entry prices up front.</p>
-      <p>It’s built by <b>Vyb Social Ltd</b>, an independent company based in London and registered in England &amp; Wales (company no. 17398192). We’re starting with London and opening to the waitlist first.</p>
-      <p>Questions, press or venues: <a href="mailto:hello@vybhq.com">hello@vybhq.com</a></p>
-    </div>
-  </section>
-
   <section class="join" id="join">
     <div class="inner">
       <h2>Get in <span>early.</span></h2>
-      <form id="waitlist-form" novalidate>
+      <div class="signup">
+      <form class="waitlist-form" novalidate>
         <div class="field">
           <input type="email" id="email" name="email" placeholder="Email" autocomplete="email" required>
         </div>
@@ -407,10 +443,11 @@
           <option value="Middlesex University"><option value="Brunel University"><option value="University of East London">
           <option value="Roehampton"><option value="St George's"><option value="Royal Holloway">
         </datalist>
-        <button type="submit" id="join-btn">Join the waitlist</button>
-        <p class="error" id="error-msg"></p>
+        <button type="submit">Join the waitlist</button>
+        <p class="error"></p>
       </form>
       <p class="note">Free to join. One email when we launch. No spam. See our <a href="privacy.html">privacy policy</a>.</p>
+      <p class="done">You’re on the list — <a href="#success">see your spot and referral link</a>.</p>
 
       <div id="success">
         <p class="in">You’re in — your spot</p>
@@ -421,6 +458,17 @@
           <button class="copy" id="copy-link" type="button">Copy link</button>
         </div>
       </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="inner">
+      <p class="kicker">About</p>
+      <h2>Made in <span>London.</span></h2>
+      <p>Vyb is an iPhone app for working out where’s actually worth going tonight — clubs, late-night food and arcades, with opening hours, last entry and entry prices up front.</p>
+      <p>It’s built by <b>Vyb Social Ltd</b>, an independent company based in London and registered in England &amp; Wales (company no. 17398192). We’re starting with London and opening to the waitlist first.</p>
+      <p>Questions, press or venues: <a href="mailto:hello@vybhq.com">hello@vybhq.com</a></p>
     </div>
   </section>
 
@@ -488,71 +536,82 @@
 
   var WAITLIST_ID = 32997;
 
-  var form = document.getElementById("waitlist-form");
-  var btn = document.getElementById("join-btn");
-  var errorMsg = document.getElementById("error-msg");
   var successCard = document.getElementById("success");
 
-  function showError(msg) {
-    errorMsg.textContent = msg;
-    errorMsg.style.display = "block";
-  }
+  // Two sign-up forms (hero + bottom) share one handler; the success card
+  // moves under whichever form was used.
+  document.querySelectorAll(".waitlist-form").forEach(function (form) {
+    var btn = form.querySelector("button[type=submit]");
+    var errorMsg = form.querySelector(".error");
+    var label = btn.textContent;
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    errorMsg.style.display = "none";
-
-    var email = document.getElementById("email").value.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      showError("That email doesn’t look right — try again?");
-      return;
+    function showError(msg) {
+      errorMsg.textContent = msg;
+      errorMsg.style.display = "block";
     }
 
-    var params = new URLSearchParams(location.search);
-    btn.disabled = true;
-    btn.textContent = "Joining…";
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      errorMsg.style.display = "none";
 
-    fetch("https://api.getwaitlist.com/api/v1/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: email,
-        waitlist_id: WAITLIST_ID,
-        referral_link: document.URL,
-        metadata: {
-          university: document.getElementById("university").value.trim() || "unknown",
-          src: params.get("src") || "direct"
-        }
+      var email = form.elements.email.value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError("That email doesn’t look right — try again?");
+        return;
+      }
+
+      var params = new URLSearchParams(location.search);
+      var uni = form.elements.university;
+      btn.disabled = true;
+      btn.textContent = "Joining…";
+
+      fetch("https://api.getwaitlist.com/api/v1/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email,
+          waitlist_id: WAITLIST_ID,
+          referral_link: document.URL,
+          metadata: {
+            university: (uni && uni.value.trim()) || "unknown",
+            src: params.get("src") || "direct"
+          }
+        })
       })
-    })
-      .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        return res.json();
-      })
-      .then(function (data) {
-        form.style.display = "none";
-        document.querySelector(".note").style.display = "none";
-        document.getElementById("position").textContent =
-          "#" + (data.priority != null ? data.priority : "?");
-        var myLink = location.origin + location.pathname + "?ref_id=" + (data.referral_token || "");
-        var waText = encodeURIComponent(
-          "found the app that sorts your night out in London — join the waitlist with my link: " + myLink
-        );
-        document.getElementById("wa-share").href = "https://wa.me/?text=" + waText;
-        document.getElementById("copy-link").addEventListener("click", function () {
-          navigator.clipboard.writeText(myLink).then(function () {
-            document.getElementById("copy-link").textContent = "Copied";
-          });
+        .then(function (res) {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json();
+        })
+        .then(function (data) { showSuccess(form, data); })
+        .catch(function () {
+          btn.disabled = false;
+          btn.textContent = label;
+          showError("Something went wrong — give it another go in a sec.");
         });
-        successCard.style.display = "block";
-        successCard.scrollIntoView({ behavior: "smooth", block: "center" });
-      })
-      .catch(function () {
-        btn.disabled = false;
-        btn.textContent = "Join the waitlist";
-        showError("Something went wrong — give it another go in a sec.");
-      });
+    });
   });
+
+  function showSuccess(form, data) {
+    var signup = form.closest(".signup");
+    document.querySelectorAll(".signup").forEach(function (s) { s.classList.add("is-done"); });
+    signup.classList.add("is-active");
+    signup.appendChild(successCard);
+
+    document.getElementById("position").textContent =
+      "#" + (data.priority != null ? data.priority : "?");
+    var myLink = location.origin + location.pathname + "?ref_id=" + (data.referral_token || "");
+    var waText = encodeURIComponent(
+      "found the app that sorts your night out in London — join the waitlist with my link: " + myLink
+    );
+    document.getElementById("wa-share").href = "https://wa.me/?text=" + waText;
+    document.getElementById("copy-link").addEventListener("click", function () {
+      navigator.clipboard.writeText(myLink).then(function () {
+        document.getElementById("copy-link").textContent = "Copied";
+      });
+    });
+    successCard.style.display = "block";
+    successCard.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
 </script>
 </body>
 </html>

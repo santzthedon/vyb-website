@@ -14,6 +14,7 @@
     --bg: #0D0B14;
     --ink: #FFFFFF;
     --accent: #C6FF3E;
+    --accent-text: #C6FF3E;
     --on-accent: #0D0B14;
     --muted: rgba(255,255,255,.62);
     --line: rgba(255,255,255,.14);
@@ -22,8 +23,9 @@
   [data-theme="light"] {
     --bg: #FFF6E8;
     --ink: #1B1B1B;
-    --accent: #FF5C1F;
-    --on-accent: #FFFFFF;
+    --accent: #FF5C1F;       /* fills (buttons) — pair with dark text, 5.6:1 */
+    --accent-text: #C9410C;  /* orange text on cream — 4.6:1 (AA) */
+    --on-accent: #1B1B1B;
     --muted: #6E6250;
     --line: rgba(27,27,27,.16);
     --header-bg: rgba(255,246,232,.88);
@@ -71,7 +73,7 @@
     font-size: .72rem;
     letter-spacing: .18em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--accent-text);
     margin-bottom: 1.2rem;
   }
   h1 {
@@ -96,7 +98,7 @@
   li + li { margin-top: .5rem; }
   b { color: var(--ink); font-weight: 600; }
   a { color: var(--ink); }
-  a:hover { color: var(--accent); }
+  a:hover { color: var(--accent-text); }
   code { font-size: .88em; color: var(--ink); }
 
   footer {
@@ -113,7 +115,7 @@
     color: var(--muted);
   }
   footer a { color: var(--ink); text-decoration: none; }
-  footer a:hover { color: var(--accent); }
+  footer a:hover { color: var(--accent-text); }
   .footer-links { display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; }
   .legal {
     flex-basis: 100%;
