@@ -127,12 +127,15 @@
   }
 </style>
 <script>
-  // Match the theme chosen on the home page.
-  try {
-    if (localStorage.getItem("vyb-theme") === "light") {
-      document.documentElement.setAttribute("data-theme", "light");
+  // Match the home page: saved choice, else the device setting.
+  (function () {
+    var mode = null;
+    try { mode = localStorage.getItem("vyb-theme"); } catch (e) {}
+    if (mode !== "light" && mode !== "dark") {
+      mode = window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
     }
-  } catch (e) {}
+    if (mode === "light") document.documentElement.setAttribute("data-theme", "light");
+  })();
 </script>
 </head>
 <body>

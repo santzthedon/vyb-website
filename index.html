@@ -154,7 +154,7 @@
   }
 
   /* sticky phone zoom */
-  .zoom-stage { height: 260svh; position: relative; padding: 0; }
+  .zoom-stage { height: 180svh; position: relative; padding: 0; }
   .zoom-sticky {
     position: sticky;
     top: 0;
@@ -360,6 +360,18 @@
     .feature-media .phone { opacity: 1; transform: none; transition: none; }
   }
 </style>
+<script>
+  // Set the theme before first paint: saved choice, else the device setting
+  // (night unless the device asks for light).
+  (function () {
+    var mode = null;
+    try { mode = localStorage.getItem("vyb-theme"); } catch (e) {}
+    if (mode !== "light" && mode !== "dark") {
+      mode = window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+    }
+    if (mode === "light") document.documentElement.setAttribute("data-theme", "light");
+  })();
+</script>
 <script async src="https://aromatic-caribou-889.convex.site/api/a/am_lQ6qWeXBk58IrmuK"></script>
 </head>
 <body>
@@ -396,7 +408,7 @@
   <section class="zoom-stage" id="zoom-stage">
     <div class="zoom-sticky">
       <div class="phone" id="zoom-phone">
-        <img src="assets/07-discover-zoom.webp" data-dark="assets/07-discover-zoom.webp" data-light="assets/08-discover-day.webp" alt="Vyb Discover map of Shoreditch with named venue pins" width="640" height="1391" loading="lazy">
+        <img data-dark="assets/07-discover-zoom.webp" data-light="assets/08-discover-day.webp" alt="Vyb Discover map of Shoreditch with named venue pins" width="640" height="1391" loading="lazy">
       </div>
       <p class="zoom-caption" id="zoom-caption">The whole city, one map</p>
     </div>
@@ -405,7 +417,7 @@
   <section class="features">
     <div class="inner">
       <div class="feature">
-        <div class="feature-media"><div class="phone"><img src="assets/04-detail.webp" data-dark="assets/04-detail.webp" data-light="assets/09-detail-day.webp" alt="Cargo venue detail with hours, last entry and cover charge" width="640" height="1391" loading="lazy"></div></div>
+        <div class="feature-media"><div class="phone"><img data-dark="assets/04-detail.webp" data-light="assets/09-detail-day.webp" alt="Cargo venue detail with hours, last entry and cover charge" width="640" height="1391" loading="lazy"></div></div>
         <div class="feature-copy">
           <p class="f-num">01 — No guesswork</p>
           <h2>Know before you go</h2>
@@ -413,7 +425,7 @@
         </div>
       </div>
       <div class="feature flip">
-        <div class="feature-media"><div class="phone"><img src="assets/10-levelup-night.webp" data-dark="assets/10-levelup-night.webp" data-light="assets/11-levelup-day.webp" alt="Vyb level-up screen — Level 4, Insider" width="640" height="1391" loading="lazy"></div></div>
+        <div class="feature-media"><div class="phone"><img data-dark="assets/10-levelup-night.webp" data-light="assets/11-levelup-day.webp" alt="Vyb level-up screen — Level 4, Insider" width="640" height="1391" loading="lazy"></div></div>
         <div class="feature-copy">
           <p class="f-num">02 — Make it a game</p>
           <h2>Earn XP for going out</h2>
@@ -483,7 +495,10 @@
   </footer>
 
 <script>
-  // Theme toggle: mirrors the app's night (default) / day modes.
+  // Theme toggle: mirrors the app's night (default) / day modes. The starting
+  // theme is set in <head>; the themed screenshots have no src in the HTML so
+  // only the matching version downloads. Follows the device setting until the
+  // visitor picks a theme themselves.
   (function () {
     var root = document.documentElement;
     var btn = document.getElementById("theme-toggle");
@@ -492,15 +507,21 @@
       else root.removeAttribute("data-theme");
       btn.textContent = mode === "light" ? "Dark" : "Light";
       document.querySelectorAll("img[data-dark]").forEach(function (img) {
-        img.src = mode === "light" ? img.dataset.light : img.dataset.dark;
+        var src = mode === "light" ? img.dataset.light : img.dataset.dark;
+        if (img.getAttribute("src") !== src) img.src = src;
       });
-      try { localStorage.setItem("vyb-theme", mode); } catch (e) {}
     }
-    var saved = null;
-    try { saved = localStorage.getItem("vyb-theme"); } catch (e) {}
-    if (saved === "light") apply("light");
+    function saved() {
+      try { return localStorage.getItem("vyb-theme"); } catch (e) { return null; }
+    }
+    apply(root.getAttribute("data-theme") === "light" ? "light" : "dark");
+    window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", function (e) {
+      if (!saved()) apply(e.matches ? "light" : "dark");
+    });
     btn.addEventListener("click", function () {
-      apply(root.getAttribute("data-theme") === "light" ? "dark" : "light");
+      var mode = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+      apply(mode);
+      try { localStorage.setItem("vyb-theme", mode); } catch (e) {}
     });
   })();
 
