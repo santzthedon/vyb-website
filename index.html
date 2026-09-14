@@ -319,7 +319,27 @@
   }
   #success .move-up { font-size: .95rem; line-height: 1.6; color: var(--muted); }
   #success .move-up b { color: var(--ink); font-weight: 600; }
-  .share-row { display: flex; gap: .6rem; margin-top: 1.5rem; }
+  .link-label {
+    display: block;
+    margin-top: 1.5rem;
+    font-size: .72rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .share-link {
+    margin-top: .5rem;
+    padding: .8rem .9rem;
+    font-size: .85rem;
+    border: 1px solid var(--line);
+    text-overflow: ellipsis;
+  }
+  .share-link:focus { border-color: var(--accent-text); }
+  .share-row { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .75rem; }
+  .share-row [hidden] { display: none; }
+  .share-row .native-share { flex-basis: 100%; background: var(--accent); color: var(--on-accent); border: 1px solid var(--accent); }
+  /* with a native share sheet available, it's the main action and WhatsApp steps back */
+  .share-row.has-native-share .wa { background: none; color: var(--ink); border-color: var(--line); }
   .share-row a, .share-row button {
     flex: 1;
     margin: 0;
@@ -341,6 +361,10 @@
   .signup .done a { color: var(--ink); }
   .signup.is-done form, .signup.is-done .note { display: none; }
   .signup.is-done:not(.is-active) .done { display: block; }
+  .proof { font-size: .9rem; line-height: 1.5; color: var(--muted); margin-bottom: 1rem; }
+  .join .proof { margin-top: 1.2rem; margin-bottom: 0; }
+  .proof b { color: var(--ink); font-weight: 600; }
+  .signup.is-done .proof { display: none; }
 
   footer {
     border-top: 1px solid var(--line);
@@ -402,6 +426,7 @@
       <h1>Where’s good <span>tonight?</span></h1>
       <p class="sub">Clubs, late-night food and arcades actually worth leaving the house for. Opening hours, entry price and what it’s known for — <b>before you’re already out</b>.</p>
       <div class="signup hero-signup">
+        <p class="proof" hidden><b></b> people are already on the list.</p>
         <form class="waitlist-form" novalidate>
           <div class="hero-row">
             <div class="field">
@@ -454,6 +479,7 @@
     <div class="inner">
       <h2>Get in <span>early.</span></h2>
       <div class="signup">
+      <p class="proof" hidden><b></b> people are already on the list.</p>
       <form class="waitlist-form" novalidate>
         <div class="field">
           <label class="sr-only" for="email">Email address</label>
@@ -481,7 +507,10 @@
         <p class="in">You’re in — your spot</p>
         <div class="position" id="position">#—</div>
         <p class="move-up">Every mate who joins with your link <b>moves you up the list</b>.</p>
-        <div class="share-row">
+        <label class="link-label" for="share-link">Your link</label>
+        <input class="share-link" id="share-link" type="text" readonly>
+        <div class="share-row" id="share-row">
+          <button class="native-share" id="native-share" type="button" hidden>Share your link</button>
           <a class="wa" id="wa-share" href="#" target="_blank" rel="noopener">Share on WhatsApp</a>
           <button class="copy" id="copy-link" type="button">Copy link</button>
         </div>
@@ -573,6 +602,21 @@
 
   var WAITLIST_ID = 32997;
 
+  // Social proof: show the real waitlist size, but only once it's worth showing.
+  var SHOW_COUNT_FROM = 250;
+  function showCount(data) {
+    var n = data && data.statistics && data.statistics.total_signups;
+    if (!n || n < SHOW_COUNT_FROM) return;
+    document.querySelectorAll(".proof").forEach(function (p) {
+      p.querySelector("b").textContent = n.toLocaleString("en-GB");
+      p.hidden = false;
+    });
+  }
+  fetch("https://api.getwaitlist.com/api/v1/waitlist?waitlist_id=" + WAITLIST_ID)
+    .then(function (res) { return res.ok ? res.json() : null; })
+    .then(showCount)
+    .catch(function () {});
+
   var successCard = document.getElementById("success");
 
   // Two sign-up forms (hero + bottom) share one handler; the success card
@@ -640,15 +684,46 @@
     document.getElementById("position").textContent =
       "#" + (data.priority != null ? data.priority : "?");
     var myLink = location.origin + location.pathname + "?ref_id=" + (data.referral_token || "");
-    var waText = encodeURIComponent(
-      "found the app that sorts your night out in London — join the waitlist with my link: " + myLink
-    );
-    document.getElementById("wa-share").href = "https://wa.me/?text=" + waText;
-    document.getElementById("copy-link").addEventListener("click", function () {
-      navigator.clipboard.writeText(myLink).then(function () {
-        document.getElementById("copy-link").textContent = "Copied";
-      });
+    var shareText = "found the app that sorts your night out in London — join the waitlist with my link";
+    document.getElementById("wa-share").href =
+      "https://wa.me/?text=" + encodeURIComponent(shareText + ": " + myLink);
+
+    // The link is always visible, so it can be copied by hand if all else fails.
+    var linkField = document.getElementById("share-link");
+    linkField.value = myLink;
+    linkField.addEventListener("focus", function () { linkField.select(); });
+
+    var copyBtn = document.getElementById("copy-link");
+    function copied(ok) {
+      copyBtn.textContent = ok ? "Copied" : "Copy it above";
+      setTimeout(function () { copyBtn.textContent = "Copy link"; }, 2500);
+    }
+    function copyFallback() {
+      linkField.focus();
+      linkField.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) {}
+      copied(ok);
+    }
+    copyBtn.addEventListener("click", function () {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(myLink).then(function () { copied(true); }, copyFallback);
+      } else {
+        copyFallback();
+      }
     });
+
+    // Native share sheet (Instagram, iMessage, WhatsApp…) where the device has one.
+    if (navigator.share) {
+      var nativeBtn = document.getElementById("native-share");
+      nativeBtn.hidden = false;
+      document.getElementById("share-row").classList.add("has-native-share");
+      nativeBtn.addEventListener("click", function () {
+        navigator.share({ title: "Vyb", text: shareText + ":", url: myLink }).catch(function (err) {
+          if (!err || err.name !== "AbortError") copyFallback();   // cancelling the sheet is fine
+        });
+      });
+    }
     successCard.style.display = "block";
     successCard.scrollIntoView({ behavior: "smooth", block: "center" });
   }
