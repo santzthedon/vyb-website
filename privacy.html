@@ -4,8 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy Policy — Vyb</title>
-<meta name="description" content="How Vyb Social Ltd collects and uses personal data on vybhq.com and the Vyb waitlist.">
+<meta name="description" content="How Vyb Social Ltd collects and uses personal data on vybhq.com, the Vyb waitlist and the Vyb iPhone app.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230D0B14'/><text x='50' y='72' font-size='60' font-family='Arial Black,sans-serif' font-weight='900' fill='%23C6FF3E' text-anchor='middle'>V</text></svg>">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0D0B14">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600&family=Archivo+Black&display=swap" rel="stylesheet">
@@ -92,6 +94,13 @@
     padding-top: 1.5rem;
     border-top: 1px solid var(--line);
   }
+  h3 {
+    font-family: "Archivo Black", sans-serif;
+    font-size: .95rem;
+    letter-spacing: .01em;
+    margin-top: 2rem;
+    color: var(--ink);
+  }
   p, li { font-size: .98rem; line-height: 1.65; color: var(--muted); }
   p { margin-top: 1rem; }
   ul { margin-top: .8rem; padding-left: 1.2rem; }
@@ -99,7 +108,21 @@
   b { color: var(--ink); font-weight: 600; }
   a { color: var(--ink); }
   a:hover { color: var(--accent-text); }
-  a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .opt-btn {
+    font: inherit;
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: none;
+    border: 1px solid var(--line);
+    padding: .85rem 1.1rem;
+    cursor: pointer;
+  }
+  .opt-btn:hover { border-color: var(--ink); }
+  .analytics-status { font-size: .9rem; }
   code { font-size: .88em; color: var(--ink); }
 
   footer {
@@ -136,6 +159,7 @@
       mode = window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
     }
     if (mode === "light") document.documentElement.setAttribute("data-theme", "light");
+    document.querySelector('meta[name="theme-color"]').content = mode === "light" ? "#FFF6E8" : "#0D0B14";
   })();
 </script>
 </head>
@@ -149,7 +173,7 @@
     <div class="inner">
       <p class="kicker">Legal</p>
       <h1>Privacy policy</h1>
-      <p class="updated">Last updated 14 September 2026</p>
+      <p class="updated">Last updated 18 September 2026</p>
 
       <p>This policy explains how Vyb Social Ltd collects and uses personal data when you visit <b>vybhq.com</b> or join the Vyb waitlist. The Vyb app will have its own privacy policy when it launches.</p>
 
@@ -198,13 +222,20 @@
       <p>This site doesn’t set cookies. It does use your browser’s local storage for:</p>
       <ul>
         <li><code>vyb-theme</code> — remembers whether you picked light or dark mode;</li>
+        <li><code>vyb-analytics</code> — remembers if you turned analytics off (see below);</li>
         <li><code>am_vid</code>, <code>am_sid</code>, <code>am_st</code> — the analytics visitor ID, session ID and session start time.</li>
       </ul>
-      <p>You can clear these at any time through your browser’s settings (usually under “site data”). The analytics will create a new random ID on your next visit.</p>
+      <p>You can clear these at any time through your browser’s settings (usually under “site data”). The analytics will create a new random ID on your next visit, unless you’ve turned it off.</p>
+
+      <h2 id="analytics">Turning analytics off</h2>
+      <p>You can turn off our analytics in this browser. We’ll stop recording your visits from it and delete the analytics IDs stored in it. Analytics is also off automatically if your browser sends a <b>Global Privacy Control</b> signal.</p>
+      <p>This setting is saved in your browser, so clearing your site data resets it.</p>
+      <p><button type="button" class="opt-btn" id="analytics-toggle">Turn off analytics</button></p>
+      <p class="analytics-status" id="analytics-status" aria-live="polite"></p>
 
       <h2>How long we keep it</h2>
       <ul>
-        <li><b>Waitlist data</b> — until Vyb launches and for up to 12 months after, unless you ask us to delete it sooner. If you create an account in the app, the app’s privacy policy applies from then on.</li>
+        <li><b>Waitlist data</b> — until Vyb launches and for up to 12 months after, unless you ask us to delete it sooner. If you create an account in the app, <a href="#app">The Vyb app</a> applies to it from then on.</li>
         <li><b>Analytics data</b> — up to 24 months.</li>
         <li><b>Emails you send us</b> — as long as needed to deal with your message.</li>
       </ul>
@@ -224,6 +255,53 @@
       <h2>Age</h2>
       <p>Vyb is about nightlife and is for people aged 18 and over. We don’t knowingly collect data from anyone under 18. If you think someone under 18 has joined the waitlist, let us know and we’ll delete their details.</p>
 
+      <h2 id="app">The Vyb app</h2>
+      <p>Vyb is an iPhone app for finding somewhere to go tonight. You can use all of it without an account. This section covers what the app collects; everything above covers the website.</p>
+
+      <h3>Your location</h3>
+      <p>With your permission, the app uses your location to centre the map on venues near you, and to check you’re actually at a venue when you check in or report how busy it is. That check happens on your phone: <b>we never receive your coordinates or store your location</b>, and there is no background or continuous tracking. You can refuse or withdraw the permission in iOS Settings at any time — the map still works, you just have to move it yourself.</p>
+
+      <h3>If you sign in with Apple</h3>
+      <p>Signing in is optional and only exists to keep your progress. When you do, we receive:</p>
+      <ul>
+        <li>an account ID from Apple, which is unique to Vyb and doesn’t identify you anywhere else;</li>
+        <li>your name, if Apple shares it — Apple only offers this the first time you sign in, and you can edit or hide it;</li>
+        <li>the venues you’ve checked in at and the quests you’ve completed, so they survive a new phone or a reinstall.</li>
+      </ul>
+      <p>We don’t ask Apple for your email address. Your check-ins are visible only to you: our database rules tie every row to your account and refuse anyone else, including other players.</p>
+      <p>If you never sign in, your XP, check-ins and quests stay on your phone and we never see them.</p>
+
+      <h3>Vibe reports</h3>
+      <p>When you tell us a venue is busy, has a queue or is charging entry, we store the venue, what you reported, the time, and a random ID the app generates when it’s installed. That ID isn’t your name, your Apple account or an identifier Apple gives us, and it lets us stop the same phone reporting the same thing repeatedly. Other people only ever see the totals, never who reported what.</p>
+
+      <h3>Venue information</h3>
+      <p>The app downloads the venue list from our database so prices and opening hours can be corrected without an app update. Like any internet request, our provider sees your IP address as part of it. The app has no advertising, no third-party analytics and no tracking across other apps or websites.</p>
+
+      <h3>How we use it, and why we’re allowed to</h3>
+      <ul>
+        <li><b>To run the app you asked for</b> — showing venues, awarding XP, keeping your progress with your account — because it’s necessary to provide the service to you (<b>contract</b>).</li>
+        <li><b>To keep vibe reports honest</b> — the location check and the random install ID — based on our <b>legitimate interests</b> in stopping false reports from people who aren’t there.</li>
+        <li><b>To use your location at all</b> — based on the <b>permission</b> you give iOS, which you can withdraw at any time.</li>
+      </ul>
+      <p>We don’t sell your data, we don’t share it with advertisers, and we don’t build advertising profiles.</p>
+
+      <h3>Who we share it with</h3>
+      <ul>
+        <li><b>Supabase</b> — hosts the database that holds venues, vibe reports and, if you sign in, your account and check-ins;</li>
+        <li><b>Apple</b> — provides Sign in with Apple and TestFlight, and tells us nothing about you beyond what’s described above.</li>
+      </ul>
+
+      <h3>Deleting your account</h3>
+      <p>Open the <b>You</b> tab and choose <b>Delete account</b>. Your account, check-ins, quests and name are deleted from our database straight away, and Vyb is removed from your Apple sign-ins, so Apple stops sharing anything with us. Progress saved on your phone stays there until you delete the app. You can also just sign out, which leaves everything as it is.</p>
+
+      <h3>How long we keep it</h3>
+      <ul>
+        <li><b>Your account and check-ins</b> — until you delete your account.</li>
+        <li><b>Vibe reports</b> — up to 30 days, after which they’re no use to anyone.</li>
+        <li><b>Your location</b> — never stored.</li>
+      </ul>
+      <p>Your rights, how to complain, and the 18+ rule above apply to the app too.</p>
+
       <h2>Changes to this policy</h2>
       <p>If we change this policy, we’ll update it here and change the date at the top. If a change significantly affects how we use your data, we’ll email people on the waitlist first.</p>
     </div>
@@ -238,5 +316,38 @@
     <span>© 2026 Vyb Social Ltd · London</span>
     <p class="legal">Vyb Social Ltd is a private limited company registered in England &amp; Wales, company no. 17398192. Registered office: Flat 35, The Fanshawe, Gale Street, Dagenham RM9 4UT, United Kingdom.</p>
   </footer>
+
+<script>
+  // Analytics opt-out for this browser; the loader on the home page reads it.
+  (function () {
+    var btn = document.getElementById("analytics-toggle");
+    var status = document.getElementById("analytics-status");
+    function isOff() {
+      try { return localStorage.getItem("vyb-analytics") === "off"; } catch (e) { return false; }
+    }
+    function render() {
+      if (navigator.globalPrivacyControl === true) {
+        status.textContent = "Analytics is off in this browser because it sends Global Privacy Control.";
+        btn.hidden = true;
+        return;
+      }
+      var off = isOff();
+      status.textContent = off ? "Analytics is off in this browser." : "Analytics is on in this browser.";
+      btn.textContent = off ? "Turn analytics back on" : "Turn off analytics";
+    }
+    btn.addEventListener("click", function () {
+      try {
+        if (isOff()) {
+          localStorage.removeItem("vyb-analytics");
+        } else {
+          localStorage.setItem("vyb-analytics", "off");
+          ["am_vid", "am_sid", "am_st"].forEach(function (k) { localStorage.removeItem(k); });
+        }
+      } catch (e) {}
+      render();
+    });
+    render();
+  })();
+</script>
 </body>
 </html>
