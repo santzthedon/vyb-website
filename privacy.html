@@ -173,9 +173,9 @@
     <div class="inner">
       <p class="kicker">Legal</p>
       <h1>Privacy policy</h1>
-      <p class="updated">Last updated 18 September 2026</p>
+      <p class="updated">Last updated 21 October 2026</p>
 
-      <p>This policy explains how Vyb Social Ltd collects and uses personal data when you visit <b>vybhq.com</b> or join the Vyb waitlist. The Vyb app will have its own privacy policy when it launches.</p>
+      <p>This policy explains how Vyb Social Ltd collects and uses personal data on <b>vybhq.com</b>, through the Vyb waitlist and in the Vyb iPhone app. The app is covered in the section below.</p>
 
       <h2>Who we are</h2>
       <p>Vyb Social Ltd (“Vyb”, “we”, “us”) is the data controller for the personal data described here. We’re a private limited company registered in England &amp; Wales, company no. 17398192, with our registered office at Flat 35, The Fanshawe, Gale Street, Dagenham RM9 4UT, United Kingdom.</p>
@@ -256,51 +256,38 @@
       <p>Vyb is about nightlife and is for people aged 18 and over. We don’t knowingly collect data from anyone under 18. If you think someone under 18 has joined the waitlist, let us know and we’ll delete their details.</p>
 
       <h2 id="app">The Vyb app</h2>
-      <p>Vyb is an iPhone app for finding somewhere to go tonight. You can use all of it without an account. This section covers what the app collects; everything above covers the website.</p>
-
-      <h3>Your location</h3>
-      <p>With your permission, the app uses your location to centre the map on venues near you, and to check you’re actually at a venue when you check in or report how busy it is. That check happens on your phone: <b>we never receive your coordinates or store your location</b>, and there is no background or continuous tracking. You can refuse or withdraw the permission in iOS Settings at any time — the map still works, you just have to move it yourself.</p>
-
-      <h3>If you sign in with Apple</h3>
-      <p>Signing in is optional and only exists to keep your progress. When you do, we receive:</p>
+      <p>Vyb helps adults discover venues in London. You can browse venues and approved stories without an account. Sign in with Apple is needed to back up progress, join live check-ins, submit stories, report stories and sync author blocks.</p>
+      <h3>Location and recent activity</h3>
+      <p>With your permission, Vyb uses your location to show nearby venues. When you choose a live check-in or submit a story, Vyb sends a fresh location reading, its accuracy and capture time to our server to verify that you are near the selected venue. Those coordinates are not written to our check-in or story database tables. There is no background location tracking.</p>
+      <p>A live check-in links your account to a venue and time for one hour, unless you end it earlier. Other people see an aggregate recent check-in count, not a list of people. This count is not the venue's total attendance. Your saved visits and quest progress are separate records that remain with your account until you delete it.</p>
+      <p>You can refuse or withdraw location permission in iOS Settings. Browsing still works; verified posting and live check-ins need a sufficiently accurate location reading.</p>
+      <h3>Sign in with Apple and progress</h3>
+      <p>If you sign in, we process an account identifier, any name Apple shares at your request, and your saved visits and completed quests. We do not request your email address from Apple. Your account identifier also connects your story submissions, reports and blocks to your account. Hiding your name from story viewers does not remove that private account link.</p>
+      <p>If you stay signed out, progress and blocked story authors can be stored on your device. Browsing does not require signing in.</p>
+      <h3>Stories, camera and microphone</h3>
+      <p>You choose whether to allow camera access and, for video sound, microphone access. Story media is captured inside Vyb, with a preview before submission. Photos and videos up to 15 seconds are uploaded to private Supabase Storage. We reduce image size and remove location metadata during processing.</p>
+      <p>New uploads wait privately for human moderation. A moderator can approve, reject or remove a submission. Unapproved submissions expire after 15 minutes. Approved stories are visible for two hours from approval, showing venue and posting time without the author's account name. People in a photo or video may still be recognisable. Viewers may take screenshots or make copies outside Vyb; we cannot erase copies others have made.</p>
+      <h3>Reports, author blocks and restrictions</h3>
+      <p>We process story reports, their reason, time and the reporter's and author's account identifiers to review abuse. Report details and author identities are not shown to other viewers. Three distinct account reports hide a story automatically pending review; moderators also review individual reports.</p>
+      <p>Blocking uses an opaque author token on the device and, when signed in, an account-level block on our server. It hides that author's stories from your view. You can reset hidden authors in the You tab. We may restrict an account's ability to submit stories to prevent abuse. Contact <a href="mailto:hello@vybhq.com">hello@vybhq.com</a> for safety concerns or to ask us to review a restriction.</p>
+      <h3>Vibe reports and venue information</h3>
+      <p>Busy, queue and door-price reports contain a venue, the selected response, time and a random installation identifier used to limit repeat reports. Other users see aggregated information. The app downloads venue information so it can be corrected without an app update. Information such as hours and entry prices can change.</p>
+      <h3>Purposes and service providers</h3>
+      <p>We process account, progress, check-in and story data to provide the features you request. We process reports, blocks, abuse restrictions and operational request information for our legitimate interests in keeping Vyb safe and reliable. Camera, microphone and location access are controlled through iOS permissions; you can withdraw them in Settings. Optional submission decisions are made in the app.</p>
+      <p>Supabase hosts authentication, database records and private story media. Apple provides Sign in with Apple and app distribution. These providers also process operational information such as IP addresses and request metadata to deliver and secure their services. The app has no advertising, third-party analytics or tracking across apps and websites. We do not sell your data or share it with advertisers. The international-transfer safeguards and rights described above apply to the app too.</p>
+      <h3>Retention and deletion</h3>
       <ul>
-        <li>an account ID from Apple, which is unique to Vyb and doesn’t identify you anywhere else;</li>
-        <li>your name, if Apple shares it — Apple only offers this the first time you sign in, and you can edit or hide it;</li>
-        <li>the venues you’ve checked in at and the quests you’ve completed, so they survive a new phone or a reinstall.</li>
+        <li>Account details, saved visits and quests remain until account deletion.</li>
+        <li>Live check-ins stop contributing after one hour or earlier checkout. We retain the latest check-in record until it is replaced or your account is deleted.</li>
+        <li>Unapproved story media becomes unavailable after its 15-minute review window. Approved media becomes unavailable after two hours or earlier removal. A scheduled cleanup removes the private files, normally shortly afterwards; delays or a processing backlog can extend physical deletion.</li>
+        <li>Small story bookkeeping records are normally retained for about 24 hours for cleanup and retry safety; cleanup delays can extend this.</li>
+        <li>Story report metadata is retained for up to 30 days. Account deletion detaches the author and reporter identifiers from retained reports.</li>
+        <li>Signed-in author blocks and story-submission restrictions remain until reset, lifted or account deletion. Device-only blocks and progress can be removed through the app's controls or device storage settings.</li>
+        <li>Vibe reports are retained for up to 30 days. Operational logs and provider backups may persist for their configured retention periods; they are not used to republish expired stories.</li>
       </ul>
-      <p>We don’t ask Apple for your email address. Your check-ins are visible only to you: our database rules tie every row to your account and refuse anyone else, including other players.</p>
-      <p>If you never sign in, your XP, check-ins and quests stay on your phone and we never see them.</p>
-
-      <h3>Vibe reports</h3>
-      <p>When you tell us a venue is busy, has a queue or is charging entry, we store the venue, what you reported, the time, and a random ID the app generates when it’s installed. That ID isn’t your name, your Apple account or an identifier Apple gives us, and it lets us stop the same phone reporting the same thing repeatedly. Other people only ever see the totals, never who reported what.</p>
-
-      <h3>Venue information</h3>
-      <p>The app downloads the venue list from our database so prices and opening hours can be corrected without an app update. Like any internet request, our provider sees your IP address as part of it. The app has no advertising, no third-party analytics and no tracking across other apps or websites.</p>
-
-      <h3>How we use it, and why we’re allowed to</h3>
-      <ul>
-        <li><b>To run the app you asked for</b> — showing venues, awarding XP, keeping your progress with your account — because it’s necessary to provide the service to you (<b>contract</b>).</li>
-        <li><b>To keep vibe reports honest</b> — the location check and the random install ID — based on our <b>legitimate interests</b> in stopping false reports from people who aren’t there.</li>
-        <li><b>To use your location at all</b> — based on the <b>permission</b> you give iOS, which you can withdraw at any time.</li>
-      </ul>
-      <p>We don’t sell your data, we don’t share it with advertisers, and we don’t build advertising profiles.</p>
-
-      <h3>Who we share it with</h3>
-      <ul>
-        <li><b>Supabase</b> — hosts the database that holds venues, vibe reports and, if you sign in, your account and check-ins;</li>
-        <li><b>Apple</b> — provides Sign in with Apple and TestFlight, and tells us nothing about you beyond what’s described above.</li>
-      </ul>
-
-      <h3>Deleting your account</h3>
-      <p>Open the <b>You</b> tab and choose <b>Delete account</b>. Your account, check-ins, quests and name are deleted from our database straight away, and Vyb is removed from your Apple sign-ins, so Apple stops sharing anything with us. Progress saved on your phone stays there until you delete the app. You can also just sign out, which leaves everything as it is.</p>
-
-      <h3>How long we keep it</h3>
-      <ul>
-        <li><b>Your account and check-ins</b> — until you delete your account.</li>
-        <li><b>Vibe reports</b> — up to 30 days, after which they’re no use to anyone.</li>
-        <li><b>Your location</b> — never stored.</li>
-      </ul>
-      <p>Your rights, how to complain, and the 18+ rule above apply to the app too.</p>
+      <p>Choose <b>Delete account</b> in the You tab to delete your account, profile, saved visits and quests, remove account blocks and restrictions, and revoke Vyb's Apple sign-in access. Your stories stop being visible immediately and their files are queued for cleanup. Progress already stored on your device remains unless you remove it separately. For a data request or deletion question, email <a href="mailto:hello@vybhq.com">hello@vybhq.com</a>.</p>
+      <h3>Review and testing mode</h3>
+      <p>TestFlight and App Review builds can offer a clearly labelled demonstration mode. Demo stories and check-ins stay on that device and do not contribute to public content, attendance or XP.</p>
 
       <h2>Changes to this policy</h2>
       <p>If we change this policy, we’ll update it here and change the date at the top. If a change significantly affects how we use your data, we’ll email people on the waitlist first.</p>
